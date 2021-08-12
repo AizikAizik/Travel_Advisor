@@ -18,7 +18,7 @@ export const Header = () => {
           </Typography>
           {/* <Autocomplete> */}
           <div className={classes.search}>
-            <div>
+            <div className={classes.searchIcon}>
               <Search />
             </div>
             <InputBase
