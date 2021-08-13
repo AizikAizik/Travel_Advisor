@@ -4,19 +4,16 @@ import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { LocationOnOutlined } from '@material-ui/icons';
 import Rating from '@material-ui/lab';
 import { useStyles } from './styles';
+import { Coordinates } from '../../App';
 
-interface Coordinates {
-  lat: number;
-  lng: number;
+interface Props {
+  coordinates: Coordinates;
+  setCoordinates: React.Dispatch<React.SetStateAction<Coordinates>>;
 }
 
-export const Map = () => {
+export const Map = ({ coordinates, setCoordinates }: Props) => {
   const classes = useStyles();
   const isMobile = useMediaQuery('(min-width:600px)');
-  const coordinates: Coordinates = {
-    lat: 0,
-    lng: 0,
-  };
 
   return (
     <div className={classes.mapContainer}>
@@ -26,6 +23,12 @@ export const Map = () => {
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
+        onChange={(e) => {
+          setCoordinates({
+            lat: e.center.lat,
+            lng: e.center.lng,
+          });
+        }}
       ></GoogleMapReact>
     </div>
   );
