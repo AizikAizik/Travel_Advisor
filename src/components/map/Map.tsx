@@ -4,14 +4,15 @@ import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { LocationOnOutlined } from '@material-ui/icons';
 import Rating from '@material-ui/lab';
 import { useStyles } from './styles';
-import { Coordinates } from '../../App';
+import {BoundsInterfaces, Coordinates} from '../../App';
 
 interface Props {
   coordinates: Coordinates;
   setCoordinates: React.Dispatch<React.SetStateAction<Coordinates>>;
+  setBounds: React.Dispatch<React.SetStateAction<BoundsInterfaces>>
 }
 
-export const Map = ({ coordinates, setCoordinates }: Props) => {
+export const Map = ({ coordinates, setCoordinates, setBounds }: Props) => {
   const classes = useStyles();
   const isMobile = useMediaQuery('(min-width:600px)');
 
@@ -28,6 +29,10 @@ export const Map = ({ coordinates, setCoordinates }: Props) => {
             lat: e.center.lat,
             lng: e.center.lng,
           });
+          setBounds({
+              ne: e.marginBounds.ne,
+              sw: e.marginBounds.sw
+          })
         }}
       ></GoogleMapReact>
     </div>

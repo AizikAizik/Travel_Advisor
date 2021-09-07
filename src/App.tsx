@@ -4,6 +4,7 @@ import { Map } from './components/map/Map';
 import { Header } from './components/header/Header';
 import { List } from './components/list/List';
 import { fetchPlacesData } from './api';
+import {Coords} from "google-map-react";
 
 export interface Coordinates {
   lat: number;
@@ -11,8 +12,8 @@ export interface Coordinates {
 }
 
 export interface BoundsInterfaces {
-  ne: number;
-  sw: number;
+  ne: Coords;
+  sw: Coords;
 }
 
 function App() {
@@ -21,7 +22,10 @@ function App() {
     lat: 0,
     lng: 0,
   });
-  const [bounds, setBounds] = useState<BoundsInterfaces | null>(null);
+  const [bounds, setBounds] = useState<BoundsInterfaces>({
+    ne: {lat:0, lng:0},
+    sw: {lat:0, lng:0},
+  });
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -35,10 +39,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(coordinates);
-    console.log(bounds);
-
-    fetchPlacesData().then((data) => {
+    fetchPlacesData(bounds.sw, bounds.ne).then((data) => {
       console.log(data);
       setPlaces(data);
     });
@@ -53,7 +54,11 @@ function App() {
           <List />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Map coordinates={coordinates} setCoordinates={setCoordinates} />
+          <Map
+              setBounds = {setBounds}
+              coordinates={coordinates}
+              setCoordinates={setCoordinates}
+          />
         </Grid>
       </Grid>
     </>

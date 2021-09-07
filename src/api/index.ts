@@ -1,9 +1,10 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import {Coords} from "google-map-react";
 
 const URL =
   'https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary';
 
-export const fetchPlacesData = async () => {
+export const fetchPlacesData = async (sw:Coords, ne:Coords) => {
   try {
     // make request
     const {
@@ -12,10 +13,10 @@ export const fetchPlacesData = async () => {
       method: 'GET',
       url: URL,
       params: {
-        bl_latitude: '11.847676',
-        tr_latitude: '12.838442',
-        bl_longitude: '109.095887',
-        tr_longitude: '109.149359',
+        bl_latitude: sw.lat,
+        tr_latitude: ne.lat,
+        bl_longitude: sw.lng,
+        tr_longitude: ne.lng,
       },
       headers: {
         'x-rapidapi-key': '93efd19023mshb317de724cb82c6p148d7ejsndb8724c5875f',
