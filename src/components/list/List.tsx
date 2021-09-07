@@ -13,21 +13,14 @@ import { PlaceDetails } from '../placedetails/PlaceDetails';
 
 type DropdownItem = 'restaurants' | 'hotels' | 'attractions';
 
-interface PlacesInterface {
-  name: string;
+interface Props {
+  places: Array<any>
 }
 
-export const List = () => {
+export const List = ({places}: Props) => {
   const classes = useStyles();
   const [dropDownText, setDropDownText] = useState<DropdownItem>('restaurants');
   const [rating, setRating] = useState('');
-
-  const places: Array<PlacesInterface> = [
-    { name: 'New York' },
-    { name: 'Lagos' },
-    { name: 'San Francisco' },
-    { name: 'Paris' },
-  ];
 
   return (
     <div className={classes.container}>
