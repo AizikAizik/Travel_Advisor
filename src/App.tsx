@@ -26,6 +26,7 @@ function App() {
     ne: {lat:0, lng:0},
     sw: {lat:0, lng:0},
   });
+  const [childClicked, setChildClicked] = useState(null)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -51,13 +52,15 @@ function App() {
       <Header />
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
-          <List places={places} />
+          <List places={places} childClicked={childClicked} />
         </Grid>
         <Grid item xs={12} md={8}>
           <Map
               setBounds = {setBounds}
               coordinates={coordinates}
               setCoordinates={setCoordinates}
+              setChildClicked={setChildClicked}
+              places={places}
           />
         </Grid>
       </Grid>

@@ -14,13 +14,15 @@ import { PlaceDetails } from '../placedetails/PlaceDetails';
 type DropdownItem = 'restaurants' | 'hotels' | 'attractions';
 
 interface Props {
-  places: Array<any>
+  places: Array<any>;
+  childClicked?: any;
 }
 
-export const List = ({places}: Props) => {
+export const List = ({places, childClicked}: Props) => {
   const classes = useStyles();
   const [dropDownText, setDropDownText] = useState<DropdownItem>('restaurants');
   const [rating, setRating] = useState('');
+  //console.log({childClicked})
 
   return (
     <div className={classes.container}>
