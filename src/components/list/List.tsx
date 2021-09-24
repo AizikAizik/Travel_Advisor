@@ -1,4 +1,4 @@
-import {useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import {
   CircularProgress,
   Grid,
@@ -10,19 +10,31 @@ import {
 } from '@material-ui/core';
 import { useStyles } from './styles';
 import { PlaceDetails } from '../placedetails/PlaceDetails';
+import {DropdownItem} from "../../types/indexTypes";
 
-type DropdownItem = 'restaurants' | 'hotels' | 'attractions';
+
 
 interface Props {
   places: Array<any>;
   childClicked?: any;
   isLoading: boolean;
+  rating: string;
+  setRating: React.Dispatch<React.SetStateAction<string>>
+  dropDownText: DropdownItem;
+  setDropDownText: React.Dispatch<React.SetStateAction<DropdownItem>>
 }
 
-export const List = ({places, childClicked, isLoading}: Props) => {
+export const List = (
+    {
+      places,
+      childClicked,
+      isLoading,
+      rating,
+      setRating,
+      dropDownText,
+      setDropDownText
+    }: Props) => {
   const classes = useStyles();
-  const [dropDownText, setDropDownText] = useState<DropdownItem>('restaurants');
-  const [rating, setRating] = useState('');
   const [elementRef, setElementRef] = useState<Array<any>>([]);
   //console.log({childClicked})
 

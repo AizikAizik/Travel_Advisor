@@ -4,20 +4,10 @@ import { Map } from './components/map/Map';
 import { Header } from './components/header/Header';
 import { List } from './components/list/List';
 import { fetchPlacesData } from './api';
-import {Coords} from "google-map-react";
-
-export interface Coordinates {
-  lat: number;
-  lng: number;
-}
-
-export interface BoundsInterfaces {
-  ne: Coords;
-  sw: Coords;
-}
+import {BoundsInterfaces, Coordinates, DropdownItem} from "./types/indexTypes";
 
 function App() {
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState<any[]>([]);
   const [coordinates, setCoordinates] = useState<Coordinates>({
     lat: 0,
     lng: 0,
@@ -28,6 +18,9 @@ function App() {
   });
   const [childClicked, setChildClicked] = useState(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const[rating, setRating] = useState<string>("");
+  const [dropDownText, setDropDownText] = useState<DropdownItem>('restaurants');
+  const [filteredPlaces, setFilteredPlaces] = useState<Array<any>>([]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -41,13 +34,20 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const filterPlaces = places.filter((place: any) => place.rating > Number(rating));
+
+    setFilteredPlaces(filterPlaces);
+  }, [rating])
+
+  useEffect(() => {
     setIsLoading(true)
-    fetchPlacesData(bounds.sw, bounds.ne).then((data) => {
+    fetchPlacesData(dropDownText, bounds.sw, bounds.ne).then((data) => {
       console.log(data);
+      setFilteredPlaces([]);
       setPlaces(data);
       setIsLoading(false);
     });
-  }, [coordinates, bounds]);
+  }, [coordinates, bounds, dropDownText]);
 
   return (
     <>
@@ -56,9 +56,13 @@ function App() {
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
           <List
-              places={places}
+              places={filteredPlaces.length ? filteredPlaces : places}
               childClicked={childClicked}
               isLoading={isLoading}
+              rating={rating}
+              setRating={setRating}
+              dropDownText={dropDownText}
+              setDropDownText={setDropDownText}
           />
         </Grid>
         <Grid item xs={12} md={8}>
@@ -67,7 +71,7 @@ function App() {
               coordinates={coordinates}
               setCoordinates={setCoordinates}
               setChildClicked={setChildClicked}
-              places={places}
+              places={filteredPlaces.length ? filteredPlaces : places}
           />
         </Grid>
       </Grid>

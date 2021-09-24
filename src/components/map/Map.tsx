@@ -4,8 +4,8 @@ import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { LocationOnOutlined } from '@material-ui/icons';
 import Rating from '@material-ui/lab/Rating';
 import { useStyles } from './styles';
-import {BoundsInterfaces, Coordinates} from '../../App';
 import mapStyles from '../../MapStyles';
+import {BoundsInterfaces, Coordinates} from "../../types/indexTypes";
 
 interface Props {
   coordinates: Coordinates;

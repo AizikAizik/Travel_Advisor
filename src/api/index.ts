@@ -1,17 +1,15 @@
 import axios from 'axios';
 import {Coords} from "google-map-react";
+import {DropdownItem} from "../types/indexTypes";
 
-const URL =
-  'https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary';
-
-export const fetchPlacesData = async (sw:Coords, ne:Coords) => {
+export const fetchPlacesData = async (dropDownText: DropdownItem, sw:Coords, ne:Coords) => {
   try {
     // make request
     const {
       data: { data },
-    } = await axios.get(URL, {
+    } = await axios.get(`https://travel-advisor.p.rapidapi.com/${dropDownText}/list-in-boundary`, {
       method: 'GET',
-      url: URL,
+      //url: URL,
       params: {
         bl_latitude: sw.lat,
         tr_latitude: ne.lat,
