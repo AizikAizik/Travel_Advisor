@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Box, Button,
     Card, CardActions,
@@ -11,8 +10,20 @@ import {LocationOn, Phone} from "@material-ui/icons";
 import { useStyles } from './styles';
 import Rating from "@material-ui/lab/Rating";
 
-export const PlaceDetails = ({ place }: any) => {
+interface Props {
+    place: any,
+    selected: boolean,
+    refProp: any
+}
+
+export const PlaceDetails = ({ place, selected, refProp }: Props) => {
   const classes = useStyles();
+
+  if(selected) {
+      console.log({refProp});
+      refProp?.current?.scrollIntoView({behavior: "smooth", block: "start"})
+  }
+
   return (
       <Card elevation={6}>
         <CardMedia

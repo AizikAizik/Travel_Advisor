@@ -5,6 +5,7 @@ import { LocationOnOutlined } from '@material-ui/icons';
 import Rating from '@material-ui/lab/Rating';
 import { useStyles } from './styles';
 import {BoundsInterfaces, Coordinates} from '../../App';
+import mapStyles from '../../MapStyles';
 
 interface Props {
   coordinates: Coordinates;
@@ -24,6 +25,7 @@ export const Map = ({ coordinates, setCoordinates, setBounds, places, setChildCl
         bootstrapURLKeys={{ key: 'AIzaSyBanw7MwVDrdzLFvb2WO7QSZI2fFZdqzoA' }}
         defaultCenter={coordinates}
         center={coordinates}
+        options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
         onChange={(e) => {
